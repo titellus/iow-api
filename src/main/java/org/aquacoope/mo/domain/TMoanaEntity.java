@@ -6,18 +6,19 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
 @Getter
 @Setter
 @EqualsAndHashCode
-@Table(name = "t_moana", schema = "MO", catalog = "biop")
+@Table(name = "t_moana", schema = "MO", catalog = "la_national")
 public class TMoanaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "MOANCODE")
-    private BigInteger moancode;
+    private String moancode;
     @Basic
     @Column(name = "ANADORCODE")
     private String anadorcode;
@@ -32,7 +33,7 @@ public class TMoanaEntity {
     private String moancodex;
     @Basic
     @Column(name = "moandate")
-    private Date moandate;
+    private Timestamp moandate;
     @Basic
     @Column(name = "MOANHOUR")
     private Integer moanhour;

@@ -1,5 +1,6 @@
 package org.aquacoope.mo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +13,7 @@ import javax.persistence.*;
 @EqualsAndHashCode
 @Table(name = "t_mostation",
         schema = "MO",
-        catalog = "biop")
+        catalog = "la_national")
 public class TMostationEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -43,19 +44,19 @@ public class TMostationEntity {
     @Column(name = "mosy")
     private Double mosy;
     @Basic
-    @Column(name = "mosxtxtprov")
-    private String mosxtxtprov;
+    @Column(name = "mosxtxtpro")
+    private String mosxtxtpro;
     @Basic
-    @Column(name = "mosytxtprov")
-    private String mosytxtprov;
+    @Column(name = "mosytxtpro")
+    private String mosytxtpro;
     @Basic
-    @Column(name = "MOSxtxt")
+    @Column(name = "mosxtxt")
     private String moSxtxt;
     @Basic
-    @Column(name = "MOSytxt")
+    @Column(name = "mosytxt")
     private String moSytxt;
     @Basic
-    @Column(name = "MOSz")
+    @Column(name = "mosz")
     private Integer moSz;
     @Basic
     @Column(name = "mosdist_cd")
@@ -67,13 +68,13 @@ public class TMostationEntity {
     @Column(name = "mostype2")
     private String mostype2;
     @Basic
-    @Column(name = "MOSyearsta")
+    @Column(name = "mosyearsta")
     private Integer moSyearsta;
+//    @Basic
+//    @Column(name = "mosyearmdif")
+//    private Integer moSyearmdif;
     @Basic
-    @Column(name = "MOSyearmdif")
-    private Integer moSyearmdif;
-    @Basic
-    @Column(name = "MOSyearend")
+    @Column(name = "mosyearend")
     private Integer moSyearend;
     @Basic
     @Column(name = "mossit1")
@@ -81,46 +82,49 @@ public class TMostationEntity {
     @Basic
     @Column(name = "mossit2")
     private String mossit2;
+//    @Basic
+//    @Column(name = "distancefromhdkm")
+//    private Integer distancefromhdkm;
     @Basic
-    @Column(name = "distancefromhdkm")
-    private Integer distancefromhdkm;
-    @Basic
-    @Column(name = "MOSknext")
+    @Column(name = "mosknext")
     private String moSknext;
     @Basic
     @Column(name = "moscatha")
     private Integer moscatha;
     @Basic
-    @Column(name = "MOScomm")
+    @Column(name = "moscomm")
     private String moScomm;
     @Basic
     @Column(name = "moscomm2")
     private String moscomm2;
     @Basic
-    @Column(name = "MOSMDEPT")
+    @Column(name = "mosmdept")
     private String mosmdept;
     @Basic
-    @Column(name = "MANRES")
+    @Column(name = "manres")
     private String manres;
     @Basic
-    @Column(name = "MOSUPDATE")
+    @Column(name = "mosupdate")
     private String mosupdate;
-    @Basic
-    @Column(name = "mosparamcode1")
-    private String mosparamcode1;
-    @Basic
-    @Column(name = "mosfinality")
-    private String mosfinality;
-    @Basic
-    @Column(name = "moswbcode")
-    private String moswbcode;
-    @Basic
-    @Column(name = "moshyecode")
-    private String moshyecode;
+//    @Basic
+//    @Column(name = "mosparamcode1")
+//    private String mosparamcode1;
+//    @Basic
+//    @Column(name = "mosfinality")
+//    private String mosfinality;
+//    @Basic
+//    @Column(name = "moswbcode")
+//    private String moswbcode;
+//    @JsonIgnore
+//    @Basic
+//    @Column(name = "moshyecode")
+//    private String moshyecode;
+    @JsonIgnore
     @Basic
     @Column(name = "moscodex")
     private String moscodex;
-    @Basic
-    @Column(name = "link_data")
-    private String linkData;
+//    @JsonIgnore
+//    @Basic
+//    @Column(name = "link_data")
+//    private String linkData;
 }

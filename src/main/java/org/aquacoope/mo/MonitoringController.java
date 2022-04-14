@@ -1,16 +1,12 @@
 package org.aquacoope.mo;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import org.aquacoope.mo.domain.TMonetEntity;
-import org.aquacoope.mo.domain.TMoparamEntity;
-import org.aquacoope.mo.domain.TMostationEntity;
-import org.aquacoope.mo.domain.TQtdataEntity;
+import org.aquacoope.mo.domain.*;
 import org.aquacoope.mo.exception.NetworkNotFoundException;
+import org.aquacoope.mo.exception.NoDataFoundException;
 import org.aquacoope.mo.exception.StationNotFoundException;
-import org.aquacoope.mo.repository.DataRepository;
-import org.aquacoope.mo.repository.NetworksRepository;
-import org.aquacoope.mo.repository.ParametersRepository;
-import org.aquacoope.mo.repository.StationsRepository;
+import org.aquacoope.mo.repository.*;
 import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +14,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 @RequestMapping("/monitoring")
 @RestController
@@ -27,13 +24,16 @@ class MonitoringController {
     private final ParametersRepository parametersRepository;
     private final NetworksRepository networksRepository;
     private final DataRepository dataRepository;
+    private final MoanaRepository moanaRepository;
 
     MonitoringController(StationsRepository repository,
                          ParametersRepository parametersRepository,
                          DataRepository dataRepository,
+                         MoanaRepository moanaRepository,
                          NetworksRepository networksRepository) {
         this.stationsRepository = repository;
         this.parametersRepository = parametersRepository;
+        this.moanaRepository = moanaRepository;
         this.dataRepository = dataRepository;
         this.networksRepository = networksRepository;
     }
@@ -63,6 +63,23 @@ class MonitoringController {
         return stationsRepository.findAllBySmoncode(p, networkId);
     }
 
+    @GetMapping("/network/{networkId:.+}/parameters")
+    List<TMoparamEntity> getNetworkParameters(
+            @Parameter(description = "Network id", example = "MON_SWQLT")
+            @PathVariable String networkId,
+            @Parameter(description = "Start date",
+                    example = "2022-04-14")
+            @DateTimeFormat(pattern = "yyyy-MM-dd")
+            @RequestParam(required = false)
+                    Date start,
+            @DateTimeFormat(pattern = "yyyy-MM-dd")
+            @RequestParam(required = false)
+                    Date end) {
+        List<String> codes = networksRepository.selectNetworkParametersForPeriod(networkId, start, end)
+                .orElseThrow(() -> new NoDataFoundException(networkId, start, end));
+
+        return parametersRepository.findAllById(codes);
+    }
 
     @GetMapping("/parameters")
     @PageableAsQueryParam
@@ -81,6 +98,7 @@ class MonitoringController {
         return stationsRepository.findAll(p);
     }
 
+
     @GetMapping("/station/{stationId:.+}")
     TMostationEntity getStation(
             @PathVariable
@@ -88,9 +106,12 @@ class MonitoringController {
         return stationsRepository.findByMoscode(stationId).orElseThrow(() -> new StationNotFoundException(stationId));
     }
 
+    @Operation(summary = "Get station data for a parameter")
     @GetMapping("/station/{stationId:.+}/data/{parameterId:.+}")
     @PageableAsQueryParam
     Page<TQtdataEntity> getStationData(
+            @Parameter(description = "Station code",
+                    example = "MOS_LA_00w007")
             @PathVariable
                     String stationId,
             @PathVariable
@@ -105,9 +126,35 @@ class MonitoringController {
                     Pageable p
     ) {
         if (start != null && end != null) {
-            return dataRepository.findAllByQtdmoscodeAndQtdmopcodeAndQtddateBetween(p, stationId, parameterId, start, end);
+            return dataRepository.findAllByQtdswmoscodeAndQtdswmopcodeAndQtdswdateBetween(p, stationId, parameterId, start, end);
         } else {
-            return dataRepository.findAllByQtdmoscodeAndQtdmopcode(p, stationId, parameterId);
+            return dataRepository.findAllByQtdswmoscodeAndQtdswmopcode(p, stationId, parameterId);
+        }
+    }
+
+    @Operation(summary = "Get station data for a water quality parameter")
+    @GetMapping("/station/{stationId:.+}/dataqlt/{parameterId:.+}")
+    @PageableAsQueryParam
+    Page<TMoanaEntity> getQLTStationData(
+            @Parameter(description = "Station code",
+                    example = "MOS_LA_SWQ010803001")
+            @PathVariable
+                    String stationId,
+            @PathVariable
+                    String parameterId,
+            @DateTimeFormat(pattern = "yyyy-MM-dd")
+            @RequestParam(required = false)
+                    Date start,
+            @DateTimeFormat(pattern = "yyyy-MM-dd")
+            @RequestParam(required = false)
+                    Date end,
+            @Parameter(hidden = true)
+                    Pageable p
+    ) {
+        if (start != null && end != null) {
+            return moanaRepository.findAllByMoancodeAndAnmopacodeAndMoandateBetween(p, stationId, parameterId, start, end);
+        } else {
+            return moanaRepository.findAllByMoancodeAndAnmopacode(p, stationId, parameterId);
         }
     }
 }

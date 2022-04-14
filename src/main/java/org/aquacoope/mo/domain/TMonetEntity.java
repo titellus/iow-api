@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @EqualsAndHashCode
-@Table(name = "t_monet", schema = "MO", catalog = "biop")
+@Table(name = "t_monet", schema = "MO", catalog = "la_national")
 public class TMonetEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -22,67 +22,67 @@ public class TMonetEntity {
     @Column(name = "monname")
     private String monname;
     @Basic
-    @Column(name = "MONname2")
-    private String moNname2;
+    @Column(name = "monname2")
+    private String monname2;
+//    @Basic
+//    @Column(name = "MONADORcode")
+//    private String monadorcode;
     @Basic
-    @Column(name = "MONADORcode")
-    private String monadoRcode;
+    @Column(name = "montopic")
+    private String montopic;
     @Basic
-    @Column(name = "MONtopic")
-    private String moNtopic;
+    @Column(name = "montopic2")
+    private String montopic2;
     @Basic
-    @Column(name = "MONtopic2")
-    private String moNtopic2;
+    @Column(name = "monsubtopic")
+    private String monsubtopic;
     @Basic
-    @Column(name = "MONsubtopic")
-    private String moNsubtopic;
-    @Basic
-    @Column(name = "MONsubtopic2")
-    private String moNsubtopic2;
-    @Basic
-    @Column(name = "MONobj")
-    private String moNobj;
-    @Basic
-    @Column(name = "MONobj2")
-    private String moNobj2;
-    @Basic
-    @Column(name = "MOSSurveil")
-    private String mosSurveil;
-    @Basic
-    @Column(name = "MOSOperat")
-    private String mosOperat;
-    @Basic
-    @Column(name = "MONetState")
-    private String moNetState;
-    @Basic
-    @Column(name = "MONst Date")
-    private String moNstDate;
-    @Basic
-    @Column(name = "MOSIntercal_site")
-    private String mosIntercalSite;
-    @Basic
-    @Column(name = "MOSReference_site")
-    private String mosReferenceSite;
-    @Basic
-    @Column(name = "MONcomm")
-    private String moNcomm;
-    @Basic
-    @Column(name = "MONcomm2")
-    private String moNcomm2;
-    @Basic
-    @Column(name = "MONUPWHO")
-    private String monupwho;
-    @Basic
-    @Column(name = "MONUPDATE")
-    private Timestamp monupdate;
-    @Basic
-    @Column(name = "MONcodex")
-    private String moNcodex;
-    @Basic
-    @Column(name = "MONstatus")
-    private String moNstatus;
-    @JsonIgnore
-    @Basic
-    @Column(name = "MONtype")
-    private String moNtype;
+    @Column(name = "monsubtopic2")
+    private String monsubtopic2;
+//    @Basic
+//    @Column(name = "MONobj")
+//    private String monobj;
+//    @Basic
+//    @Column(name = "MONobj2")
+//    private String monobj2;
+//    @Basic
+//    @Column(name = "MOSSurveil")
+//    private String mossurveil;
+//    @Basic
+//    @Column(name = "MOSOperat")
+//    private String mospperat;
+//    @Basic
+//    @Column(name = "MONetState")
+//    private String monetstate;
+//    @Basic
+//    @Column(name = "MONst Date")
+//    private String monstdate;
+//    @Basic
+//    @Column(name = "MOSIntercal_site")
+//    private String mosintercalsite;
+//    @Basic
+//    @Column(name = "MOSReference_site")
+//    private String mosReferenceSite;
+//    @Basic
+//    @Column(name = "MONcomm")
+//    private String moncomm;
+//    @Basic
+//    @Column(name = "MONcomm2")
+//    private String moncomm2;
+//    @Basic
+//    @Column(name = "MONUPWHO")
+//    private String monupwho;
+//    @Basic
+//    @Column(name = "MONUPDATE")
+//    private Timestamp monupdate;
+//    @Basic
+//    @Column(name = "moncodex")
+//    private String moncodex;
+//    @Basic
+//    @Column(name = "MONstatus")
+//    private String monstatus;
+//    @JsonIgnore
+//    @Basic
+//    @Column(name = "MONtype")
+//    private String montype;
 }
